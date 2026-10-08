@@ -20,9 +20,9 @@ package com.android.systemui.slimrecent;
 
 //import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
-import android.app.IActivityManager;
+import android.app.ActivityTaskManager;
+import android.app.WindowConfiguration;
 import android.app.TaskStackBuilder;
 //import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -33,7 +33,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 //import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
-import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 //import android.graphics.Bitmap.Config;
@@ -50,11 +49,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
+import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
 import android.os.UserHandle;
-import android.os.UserManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -69,23 +68,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
-import com.android.systemui.R;
-import com.android.systemui.recents.Recents;
-import com.android.systemui.shared.system.ActivityManagerWrapper;
-import com.android.systemui.shared.system.ActivityOptionsCompat;
 import com.android.systemui.slimrecent.ExpandableCardAdapter.ExpandableCard;
 import com.android.systemui.slimrecent.ExpandableCardAdapter.OptionsItem;
 import com.android.systemui.slimrecent.icons.IconsHandler;
-import com.android.systemui.stackdivider.WindowManagerProxy;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import java.util.ArrayList;
-import android.util.ArraySet;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -100,6 +94,10 @@ import java.util.concurrent.TimeUnit;
 public class RecentPanelView {
 
     private static final String TAG = "RecentPanelView";
+
+    private static final int MAX_RECENT_TASKS = 50;
+
+    private static final Executor BACKGROUND = Executors.newSingleThreadExecutor();
 
     public static final String TASK_PACKAGE_IDENTIFIER = "#ident:";
 
@@ -155,11 +153,8 @@ public class RecentPanelView {
 
     private Set<String> mBlacklist = new HashSet<String>();
 
-    private ArraySet<Integer> mCurrentQuietProfiles = new ArraySet<Integer>();
-
     private PackageManager mPm;
     private ActivityManager mAm;
-    private IActivityManager mIam;
 
     private IconsHandler mIconsHandler;
 
@@ -387,7 +382,6 @@ public class RecentPanelView {
         mPm = mContext.getPackageManager();
         mAm = (ActivityManager)
                 context.getSystemService(Context.ACTIVITY_SERVICE);
-        mIam = ActivityManagerNative.getDefault();
         mRes = context.getResources();
         mFirstExpandedItems =
                 mRes.getInteger(R.integer.expanded_items_default);
@@ -475,37 +469,10 @@ public class RecentPanelView {
 
                 unwantedDrag = true; //restore the drag check
 
-                boolean wasDocked = false;
-                int dockSide = WindowManagerProxy.getInstance().getDockSide();
-                if (dockSide != WindowManager.DOCKED_INVALID) {
-                    wasDocked = true;
-                }
-
-                ActivityOptions options =
-                        ActivityOptionsCompat.makeSplitScreenOptions(true/*dockTopLeft*/);
-                Handler mHandler = new Handler();
-                mHandler.postDelayed(new Runnable() {
-                    public void run() {
-                        try {
-                            card = (RecentCard) mCardAdapter.getCard(finalPos);
-                            int newTaskid = card.task.persistentTaskId;
-                            mIam.startActivityFromRecents((finalPos > initPos)
-                                    ? taskid : newTaskid, options.toBundle());
-                            /*after we docked our main app, on the other side of the screen we
-                            open the app we dragged the main app over*/
-                            try {
-                                mIam.startActivityFromRecents(((finalPos > initPos)
-                                        ? newTaskid : taskid),
-                                        RecentController.getAnimation(mContext).toBundle());
-                            } catch (RemoteException e) {}
-                            // No need to keep the panel open, we already chose both
-                            // top and bottom apps
-                            mController.closeRecents();
-                        } catch (Exception e) {}
-                    }
-                /*if we disabled a running multiwindow mode, just wait a little bit
-                before docking the new apps*/
-                }, wasDocked ? 100 : 0);
+                RecentCard target = (RecentCard) mCardAdapter.getCard(finalPos);
+                int newTaskid = target.task.persistentTaskId;
+                mController.splitTasks(finalPos > initPos ? taskid : newTaskid,
+                        finalPos > initPos ? newTaskid : taskid);
 
                 // Hide card options after using multiwindow button as drag handle
                 if (mCurrentDraggingView != null) {
@@ -601,7 +568,7 @@ public class RecentPanelView {
         td.setIsFavorite(!td.getIsFavorite());
 
         Settings.System.putStringForUser(
-                resolver, Settings.System.RECENT_PANEL_FAVORITES,
+                resolver, SlimSettings.RECENT_PANEL_FAVORITES,
                 entryToSave,
                 UserHandle.USER_CURRENT);
     }
@@ -611,7 +578,7 @@ public class RecentPanelView {
      */
     private void removeApplication(TaskDescription td) {
         // Kill the actual app and send accessibility event.
-        ActivityManagerWrapper.getInstance().removeTask(td.persistentTaskId);
+        removeTask(td.persistentTaskId);
 
         // Accessibility feedback
         /*
@@ -671,11 +638,11 @@ public class RecentPanelView {
         final List<ActivityManager.RecentTaskInfo> recentTasks = getAllRecentTasks();
         for (int i = 0; i < recentTasks.size(); i++) {
             final ActivityManager.RecentTaskInfo recentInfo = recentTasks.get(i);
-            if (!favorites.isEmpty() && favorites.contains(recentInfo.persistentId)) {
+            if (!favorites.isEmpty() && favorites.contains(recentInfo.taskId)) {
                 // skip favorite apps
                 continue;
             }
-            ActivityManagerWrapper.getInstance().removeTask(recentInfo.persistentId);
+            removeTask(recentInfo.taskId);
         }
 
         return !hasFavorite;
@@ -745,7 +712,7 @@ public class RecentPanelView {
             }
         }
         if (info != null) {
-            String title = td.getLabel();
+            String title = td != null ? td.getLabel() : null;
             if (title == null) {
                 title = info.loadLabel(mPm).toString();
             }
@@ -758,7 +725,7 @@ public class RecentPanelView {
             }
 
             if (title != null && title.length() > 0) {
-                int color = td.getPrimaryColor();
+                int color = td != null ? td.getPrimaryColor() : 0;
 
                 final TaskDescription item = new TaskDescription(taskId,
                         persistentTaskId, info, baseIntent, info.packageName, cn,
@@ -1041,21 +1008,14 @@ public class RecentPanelView {
                     intent.setComponent(recentInfo.origActivity);
                 }
 
-                boolean topTask = i == 0;
-                if (topTask) {
-                    ActivityManager.RunningTaskInfo rTask = getRunningTask(mAm);
-                    if (rTask != null) {
-                        if (!rTask.baseActivity.getPackageName().equals(
-                                recentInfo.baseIntent.getComponent().getPackageName())) {
-                            topTask = false;
-                        }
-                    }
+                boolean topTask = i == 0 && recentInfo.isVisible;
+                if (i == 0) {
                     mController.isTopTaskInForeground(topTask);
                 }
 
-                TaskDescription item = createTaskDescription(recentInfo.id,
-                        recentInfo.persistentId, recentInfo.baseIntent,
-                        recentInfo.origActivity, recentInfo.description,
+                TaskDescription item = createTaskDescription(recentInfo.taskId,
+                        recentInfo.taskId, recentInfo.baseIntent,
+                        recentInfo.origActivity, null,
                         false, EXPANDED_STATE_UNKNOWN, recentInfo.taskDescription);
 
                 if (item == null) {
@@ -1243,24 +1203,36 @@ public class RecentPanelView {
     }
 
     private List<ActivityManager.RecentTaskInfo> getAllRecentTasks() {
-        return mAm.getRecentTasks(ActivityManager.getMaxRecentTasksStatic(),
-                ActivityManager.SLIM_RECENTS);
-
+        final List<ActivityManager.RecentTaskInfo> tasks = new ArrayList<>();
+        try {
+            final List<ActivityManager.RecentTaskInfo> all = ActivityTaskManager.getService()
+                    .getRecentTasks(MAX_RECENT_TASKS, ActivityManager.RECENT_IGNORE_UNAVAILABLE,
+                            ActivityManager.getCurrentUser()).getList();
+            for (ActivityManager.RecentTaskInfo info : all) {
+                final int type = info.topActivityType;
+                if (type == WindowConfiguration.ACTIVITY_TYPE_HOME
+                        || type == WindowConfiguration.ACTIVITY_TYPE_RECENTS
+                        || type == WindowConfiguration.ACTIVITY_TYPE_DREAM
+                        || info.baseIntent == null
+                        || info.baseIntent.hasCategory(Intent.CATEGORY_HOME)) {
+                    continue;
+                }
+                tasks.add(info);
+            }
+        } catch (RemoteException | RuntimeException e) {
+            Log.w(TAG, "Could not read recent tasks", e);
+        }
+        return tasks;
     }
 
-    private void updateCurrentQuietProfilesCache(int currentUserId) {
-        mCurrentQuietProfiles.clear();
-
-        UserManager userManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-        List<UserInfo> profiles = userManager.getProfiles(currentUserId);
-        if (profiles != null) {
-            for (int i = 0; i < profiles.size(); i++) {
-                UserInfo user  = profiles.get(i);
-                if (user.isManagedProfile() && user.isQuietModeEnabled()) {
-                    mCurrentQuietProfiles.add(user.id);
-                }
+    static void removeTask(int taskId) {
+        BACKGROUND.execute(() -> {
+            try {
+                ActivityTaskManager.getService().removeTask(taskId);
+            } catch (RemoteException | RuntimeException e) {
+                Log.w(TAG, "Could not remove task " + taskId, e);
             }
-        }
+        });
     }
 
     public void setIconsHandler(IconsHandler ih) {
@@ -1410,22 +1382,6 @@ public class RecentPanelView {
         }
     }
 
-    private static ActivityManager.RunningTaskInfo
-            getRunningTask(ActivityManager am) {
-        // Note: The set of running tasks from the system is ordered by recency
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(10);
-        if (tasks != null && !tasks.isEmpty()) {
-            // Find the first task in a valid stack, we ignore everything
-            // from the Recents and PiP stacks
-            for (int i = 0; i < tasks.size(); i++) {
-                ActivityManager.RunningTaskInfo task = tasks.get(i);
-                int stackId = task.stackId;
-                return task;
-            }
-        }
-        return null;
-    }
-
     protected void isScreenPinningEnabled(boolean enabled) {
         mIsScreenPinningEnabled = enabled;
     }
@@ -1470,12 +1426,14 @@ public class RecentPanelView {
 
     public static Bitmap getThumbnail(int taskId, boolean reducedResolution, Context context) {
         try {
-            ActivityManager.TaskSnapshot snapshot = ActivityManager.getService()
-                    .getTaskSnapshot(taskId, reducedResolution);
+            TaskSnapshot snapshot = TaskSnapshotManager.getInstance().getTaskSnapshot(
+                    taskId, TaskSnapshotManager.convertRetrieveFlag(reducedResolution));
             if (snapshot != null) {
-                return Bitmap.wrapHardwareBuffer(snapshot.getSnapshot(), snapshot.getColorSpace());
+                Bitmap bitmap = snapshot.wrapToBitmap();
+                snapshot.closeBuffer();
+                return bitmap;
             }
-        } catch (RemoteException e) {
+        } catch (RemoteException | RuntimeException e) {
             Log.w(TAG, "Failed to retrieve snapshot", e);
         }
         return null;

@@ -48,9 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.android.internal.util.rr.AbstractIconsHandler;
 
-public class IconsHandler implements AbstractIconsHandler {
+public class IconsHandler {
 
     private static final String TAG = "IconsHandler";
 

@@ -107,7 +107,7 @@ public class CacheController {
     private void mayBeRemoveFavoriteEntry(String packageName) {
         ContentResolver resolver = mContext.getContentResolver();
         final String favorites = Settings.System.getStringForUser(
-                    resolver, Settings.System.RECENT_PANEL_FAVORITES,
+                    resolver, SlimSettings.RECENT_PANEL_FAVORITES,
                     UserHandle.USER_CURRENT);
         String entryToSave = "";
 
@@ -125,7 +125,7 @@ public class CacheController {
         }
 
         Settings.System.putStringForUser(
-                resolver, Settings.System.RECENT_PANEL_FAVORITES,
+                resolver, SlimSettings.RECENT_PANEL_FAVORITES,
                 entryToSave,
                 UserHandle.USER_CURRENT);
     }

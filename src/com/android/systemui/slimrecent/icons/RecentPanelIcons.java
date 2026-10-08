@@ -30,7 +30,7 @@ import android.graphics.drawable.PaintDrawable;
 import android.os.Process;
 import android.os.UserHandle;
 
-import com.android.systemui.R;
+import com.android.systemui.slimrecent.R;
 
 /**
  * Helper methods for generating various launcher icons
@@ -200,7 +200,7 @@ public class RecentPanelIcons {
             } else {
                 icon.setBounds(left, top, left+width, top+height);
             }
-            canvas.save(Canvas.MATRIX_SAVE_FLAG);
+            canvas.save();
             canvas.scale(scale, scale, textureWidth / 2, textureHeight / 2);
             icon.draw(canvas);
             canvas.restore();

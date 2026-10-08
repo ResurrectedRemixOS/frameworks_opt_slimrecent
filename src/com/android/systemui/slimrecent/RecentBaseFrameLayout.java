@@ -22,14 +22,37 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 
 class RecentBaseFrameLayout extends FrameLayout {
 
     private RecentController mRecentController;
 
+    private final OnBackInvokedCallback mBackCallback = () -> mRecentController.onExit();
+
     public RecentBaseFrameLayout(Context context, RecentController recentController) {
         super(context);
         mRecentController = recentController;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        OnBackInvokedDispatcher dispatcher = findOnBackInvokedDispatcher();
+        if (dispatcher != null) {
+            dispatcher.registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, mBackCallback);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        OnBackInvokedDispatcher dispatcher = findOnBackInvokedDispatcher();
+        if (dispatcher != null) {
+            dispatcher.unregisterOnBackInvokedCallback(mBackCallback);
+        }
+        super.onDetachedFromWindow();
     }
 
     @Override

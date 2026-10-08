@@ -28,13 +28,11 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Process;
 
-import com.android.systemui.R;
 
 import java.lang.ref.WeakReference;
 
 import com.android.systemui.slimrecent.icons.IconsHandler;
 
-import com.android.internal.util.rr.ImageHelper;
 
 /**
  * This class handles async app icon load for the requested apps

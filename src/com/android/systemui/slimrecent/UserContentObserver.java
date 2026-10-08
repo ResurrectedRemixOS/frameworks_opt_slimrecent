@@ -15,12 +15,11 @@
  */
 package com.android.systemui.slimrecent;
 
-import android.app.ActivityManagerNative;
-import android.app.IUserSwitchObserver;
+import android.app.ActivityManager;
+import android.app.UserSwitchObserver;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.IRemoteCallback;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -32,19 +31,11 @@ public abstract class UserContentObserver extends ContentObserver {
 
     private Runnable mUpdateRunnable;
 
-    private IUserSwitchObserver mUserSwitchObserver = new IUserSwitchObserver.Stub() {
-        @Override
-        public void onUserSwitching(int newUserId, IRemoteCallback reply) {
-        }
+    private UserSwitchObserver mUserSwitchObserver = new UserSwitchObserver() {
         @Override
         public void onUserSwitchComplete(int newUserId) throws RemoteException {
             mHandler.post(mUpdateRunnable);
         }
-        @Override
-        public void onForegroundProfileSwitch(int newProfileId) {
-        }
-        @Override
-        public void onLockedBootComplete(int newUserId) throws RemoteException {}
     };
 
     private Handler mHandler;
@@ -66,7 +57,7 @@ public abstract class UserContentObserver extends ContentObserver {
 
     protected void observe() {
         try {
-            ActivityManagerNative.getDefault().registerUserSwitchObserver(mUserSwitchObserver, TAG);
+            ActivityManager.getService().registerUserSwitchObserver(mUserSwitchObserver, TAG);
         } catch (RemoteException e) {
             Log.w(TAG, "Unable to register user switch observer!", e);
         }
@@ -75,7 +66,7 @@ public abstract class UserContentObserver extends ContentObserver {
     protected void unobserve() {
         try {
             mHandler.removeCallbacks(mUpdateRunnable);
-            ActivityManagerNative.getDefault().unregisterUserSwitchObserver(mUserSwitchObserver);
+            ActivityManager.getService().unregisterUserSwitchObserver(mUserSwitchObserver);
         } catch (RemoteException e) {
             Log.w(TAG, "Unable to unregister user switch observer!", e);
         }
