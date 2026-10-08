@@ -54,7 +54,9 @@ import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.WindowManager;
+import android.view.WindowMetrics;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -590,7 +592,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
                 R.dimen.recent_width) * mScaleFactor);
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 width,
-                WindowManager.LayoutParams.MATCH_PARENT,
+                getPanelHeight(),
                 WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
@@ -599,8 +601,8 @@ public class RecentController implements RecentPanelView.OnExitListener,
                         | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                 PixelFormat.TRANSLUCENT);
 
-        // Set gravitiy.
-        params.gravity = mMainGravity | Gravity.CENTER_VERTICAL;
+        // Hang from the status bar so the panel ends above the launcher dock.
+        params.gravity = mMainGravity | Gravity.TOP;
 
         // Set animation for our recent window.
         switch (mEnterExitAnimation) {
@@ -620,6 +622,18 @@ public class RecentController implements RecentPanelView.OnExitListener,
         // This title is for debugging only. See: dumpsys window
         params.setTitle("RecentControlPanel");
         return params;
+    }
+
+    private int getPanelHeight() {
+        if (mContext.getResources().getConfiguration().orientation
+                != Configuration.ORIENTATION_PORTRAIT) {
+            return WindowManager.LayoutParams.MATCH_PARENT;
+        }
+        WindowMetrics metrics = mWindowManager.getCurrentWindowMetrics();
+        int top = metrics.getWindowInsets().getInsets(
+                WindowInsets.Type.statusBars() | WindowInsets.Type.displayCutout()).top;
+        int dock = mContext.getResources().getDimensionPixelSize(R.dimen.recent_dock_reserve);
+        return Math.max(0, metrics.getBounds().height() - top - dock);
     }
 
     // Returns if panel is currently showing.

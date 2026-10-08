@@ -3,9 +3,11 @@
 <resources>
 
     <!-- Slim recent -->
-    <dimen name="recent_width">230dp</dimen>
+    <dimen name="recent_width">196dp</dimen>
     <dimen name="slim_recents_elevation">20dp</dimen>
-    <dimen name="recent_app_icon_size">48dp</dimen>
+    <!-- Launcher dock height plus a gap; the portrait panel ends above it. -->
+    <dimen name="recent_dock_reserve">104dp</dimen>
+    <dimen name="recent_app_icon_size">40dp</dimen>
     <dimen name="recent_app_icon_padding">3dp</dimen>
     <dimen name="recent_app_name_padding">3dp</dimen>
     <dimen name="recent_expand_button_padding">5dp</dimen>
@@ -15,7 +17,7 @@
     <dimen name="recent_text_size">20dp</dimen>
     <dimen name="recent_thumbnail_bottom_padding">3dp</dimen>
     <dimen name="recent_keyguard_text_margin">8dp</dimen>
-    <dimen name="recent_card_height">48dp</dimen>
+    <dimen name="recent_card_height">42dp</dimen>
     <dimen name="recent_card_padding">5dp</dimen>
     <dimen name="recent_card_layout_margin_horizontal">5dp</dimen>
     <dimen name="recent_card_layout_marginTop">5dp</dimen>
