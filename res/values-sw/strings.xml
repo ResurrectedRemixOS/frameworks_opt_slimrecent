@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Fungua kifaa chako ili uone zilizotumika majuzi</string>
+    <string name="slim_recent_pinned">Ondoa kigae ili uone zilizotumika majuzi</string>
+    <string name="toast_recents_queue_app">Zindua %s baada ya kufunga zilizotumika majuzi</string>
+    <string name="toast_recents_cancel_queued_app">Uzinduzi wa programu umeghairiwa</string>
+    <string name="slim_recents_free_ram">RAM: MB %1$d zimebaki</string>
+</resources>

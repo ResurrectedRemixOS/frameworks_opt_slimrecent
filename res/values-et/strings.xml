@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Hiljutiste vaatamiseks ava lukk</string>
+    <string name="slim_recent_pinned">Hiljutiste vaatamiseks eemalda ekraani kinnitus</string>
+    <string name="toast_recents_queue_app">Käivita %s pärast hiljutiste sulgemist</string>
+    <string name="toast_recents_cancel_queued_app">Rakenduse käivitamine tühistati</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB vaba</string>
+</resources>

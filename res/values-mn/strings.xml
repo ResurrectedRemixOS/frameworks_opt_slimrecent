@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Саяхныг харахын тулд төхөөрөмжөө түгжээнээс гаргана уу</string>
+    <string name="slim_recent_pinned">Саяхныг харахын тулд дэлгэцийн бэхлэлтийг тайлна уу</string>
+    <string name="toast_recents_queue_app">Саяхныг хаасны дараа %s-г нээх</string>
+    <string name="toast_recents_cancel_queued_app">Аппыг нээхийг цуцлав</string>
+    <string name="slim_recents_free_ram">RAM: %1$d МБ чөлөөтэй</string>
+</resources>

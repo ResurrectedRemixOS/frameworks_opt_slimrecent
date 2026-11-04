@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">حالیہ دیکھنے کے لیے اپنا آلہ ان لاک کریں</string>
+    <string name="slim_recent_pinned">حالیہ دیکھنے کے لیے اسکرین کو ان پن کریں</string>
+    <string name="toast_recents_queue_app">حالیہ بند کرنے کے بعد %s لانچ کریں</string>
+    <string name="toast_recents_cancel_queued_app">ایپ لانچ منسوخ کر دی گئی</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB خالی</string>
+</resources>

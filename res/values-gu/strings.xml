@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">તાજેતરના જોવા માટે ડિવાઇસ અનલૉક કરો</string>
+    <string name="slim_recent_pinned">તાજેતરના જોવા માટે સ્ક્રીન અનપિન કરો</string>
+    <string name="toast_recents_queue_app">તાજેતરના બંધ કર્યા પછી %s લૉન્ચ કરો</string>
+    <string name="toast_recents_cancel_queued_app">ઍપ લૉન્ચ રદ કરી</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB ખાલી</string>
+</resources>

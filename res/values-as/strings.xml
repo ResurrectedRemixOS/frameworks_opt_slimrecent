@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">শেহতীয়া চাবলৈ ডিভাইচ আনলক কৰক</string>
+    <string name="slim_recent_pinned">শেহতীয়া চাবলৈ স্ক্ৰীনৰ পিন আঁতৰাওক</string>
+    <string name="toast_recents_queue_app">শেহতীয়া বন্ধ কৰাৰ পিছত %s আৰম্ভ কৰক</string>
+    <string name="toast_recents_cancel_queued_app">এপ আৰম্ভ বাতিল কৰা হ\'ল</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB খালী</string>
+</resources>

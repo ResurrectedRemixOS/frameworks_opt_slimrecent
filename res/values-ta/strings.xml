@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">சமீபத்தியவற்றைப் பார்க்க சாதனத்தைத் திறக்கவும்</string>
+    <string name="slim_recent_pinned">சமீபத்தியவற்றைப் பார்க்க திரையின் பின் நிலையை நீக்கவும்</string>
+    <string name="toast_recents_queue_app">சமீபத்தியவற்றை மூடிய பின் %s-ஐ தொடங்கு</string>
+    <string name="toast_recents_cancel_queued_app">ஆப் தொடக்கம் ரத்து செய்யப்பட்டது</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB இலவசம்</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Mở khóa thiết bị để xem Gần đây</string>
+    <string name="slim_recent_pinned">Bỏ ghim màn hình để xem Gần đây</string>
+    <string name="toast_recents_queue_app">Mở %s sau khi đóng Gần đây</string>
+    <string name="toast_recents_cancel_queued_app">Đã hủy mở ứng dụng</string>
+    <string name="slim_recents_free_ram">RAM: còn trống %1$d MB</string>
+</resources>

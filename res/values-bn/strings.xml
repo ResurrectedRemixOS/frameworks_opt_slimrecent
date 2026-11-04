@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">সাম্প্রতিক দেখতে ডিভাইস আনলক করুন</string>
+    <string name="slim_recent_pinned">সাম্প্রতিক দেখতে স্ক্রিনের পিন খুলুন</string>
+    <string name="toast_recents_queue_app">সাম্প্রতিক বন্ধ করার পর %s চালু করুন</string>
+    <string name="toast_recents_cancel_queued_app">অ্যাপ চালু করা বাতিল হয়েছে</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB খালি আছে</string>
+</resources>

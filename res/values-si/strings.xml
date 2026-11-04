@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">මෑත බැලීමට ඔබේ උපාංගය අගුළු හරින්න</string>
+    <string name="slim_recent_pinned">මෑත බැලීමට තිරය ගලවන්න</string>
+    <string name="toast_recents_queue_app">මෑත වසා දැමීමෙන් පසු %s ආරම්භ කරන්න</string>
+    <string name="toast_recents_cancel_queued_app">යෙදුම් ආරම්භය අවලංගු කරන ලදී</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB නිදහස්</string>
+</resources>

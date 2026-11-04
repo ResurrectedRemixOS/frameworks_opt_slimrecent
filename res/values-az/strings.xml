@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Sonuncuları görmək üçün cihazın kilidini açın</string>
+    <string name="slim_recent_pinned">Sonuncuları görmək üçün ekranın bərkidilməsini ləğv edin</string>
+    <string name="toast_recents_queue_app">Sonuncular bağlandıqdan sonra %s açılsın</string>
+    <string name="toast_recents_cancel_queued_app">Tətbiqin açılması ləğv edildi</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB boş</string>
+</resources>

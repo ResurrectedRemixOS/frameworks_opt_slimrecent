@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">ປົດລັອກອຸປະກອນເພື່ອເບິ່ງຫຼ້າສຸດ</string>
+    <string name="slim_recent_pinned">ຍົກເລີກການປັກໝຸດໜ້າຈໍເພື່ອເບິ່ງຫຼ້າສຸດ</string>
+    <string name="toast_recents_queue_app">ເປີດ %s ຫຼັງປິດຫຼ້າສຸດ</string>
+    <string name="toast_recents_cancel_queued_app">ຍົກເລີກການເປີດແອັບ</string>
+    <string name="slim_recents_free_ram">RAM: ວ່າງ %1$d MB</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">برای دیدن موارد اخیر، دستگاه را باز کنید</string>
+    <string name="slim_recent_pinned">برای دیدن موارد اخیر، سنجاق صفحه را بردارید</string>
+    <string name="toast_recents_queue_app">پس از بستن موارد اخیر، %s اجرا شود</string>
+    <string name="toast_recents_cancel_queued_app">اجرای برنامه لغو شد</string>
+    <string name="slim_recents_free_ram">رم: %1$d مگابایت آزاد</string>
+</resources>

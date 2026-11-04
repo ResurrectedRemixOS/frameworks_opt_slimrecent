@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">ដោះសោឧបករណ៍របស់អ្នកដើម្បីមើលកម្មវិធីថ្មីៗ</string>
+    <string name="slim_recent_pinned">ដោះការខ្ទាស់អេក្រង់ដើម្បីមើលកម្មវិធីថ្មីៗ</string>
+    <string name="toast_recents_queue_app">បើក %s បន្ទាប់ពីបិទកម្មវិធីថ្មីៗ</string>
+    <string name="toast_recents_cancel_queued_app">បានបោះបង់ការបើកកម្មវិធី</string>
+    <string name="slim_recents_free_ram">RAM៖ នៅសល់ %1$d MB</string>
+</resources>

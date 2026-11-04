@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Desbloqueja el dispositiu per veure les recents</string>
+    <string name="slim_recent_pinned">Desfixa la pantalla per veure les recents</string>
+    <string name="toast_recents_queue_app">Obre %s en tancar les recents</string>
+    <string name="toast_recents_cancel_queued_app">Obertura de l\'aplicació cancel·lada</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB lliures</string>
+</resources>

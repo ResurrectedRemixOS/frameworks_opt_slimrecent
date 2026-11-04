@@ -21,4 +21,6 @@
     <string name="slim_recent_keyguard">Розблокуйте пристрій для перегляду нещодавніх додатків</string>
     <string name="toast_recents_cancel_queued_app">Скасовано запуск додатка</string>
     <string name="slim_recents_free_ram">RAM: %1$d MB вільно</string>
+    <string name="slim_recent_pinned">Відкріпіть екран, щоб переглянути нещодавні</string>
+    <string name="toast_recents_queue_app">Запустити %s після закриття нещодавніх</string>
 </resources>

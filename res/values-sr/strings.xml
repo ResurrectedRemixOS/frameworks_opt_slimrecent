@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Откључајте уређај да бисте видели недавно</string>
+    <string name="slim_recent_pinned">Откачите екран да бисте видели недавно</string>
+    <string name="toast_recents_queue_app">Покрени %s након затварања недавних</string>
+    <string name="toast_recents_cancel_queued_app">Отказано покретање апликације</string>
+    <string name="slim_recents_free_ram">RAM: слободно %1$d MB</string>
+</resources>

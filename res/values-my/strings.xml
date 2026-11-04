@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">လတ်တလော ကြည့်ရန် ဖုန်းကို လော့ခ်ဖွင့်ပါ</string>
+    <string name="slim_recent_pinned">လတ်တလော ကြည့်ရန် ပင်ထိုးထားသော စခရင်ကို ဖြုတ်ပါ</string>
+    <string name="toast_recents_queue_app">လတ်တလော ပိတ်ပြီးနောက် %s ကို ဖွင့်ရန်</string>
+    <string name="toast_recents_cancel_queued_app">အက်ပ် ဖွင့်ခြင်းကို ပယ်ဖျက်ပြီးပြီ</string>
+    <string name="slim_recents_free_ram">RAM: အခမဲ့ %1$d MB</string>
+</resources>

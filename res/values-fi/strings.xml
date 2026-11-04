@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Avaa laite nähdäksesi viimeaikaiset</string>
+    <string name="slim_recent_pinned">Irrota näytön kiinnitys nähdäksesi viimeaikaiset</string>
+    <string name="toast_recents_queue_app">Käynnistä %s viimeaikaisten sulkemisen jälkeen</string>
+    <string name="toast_recents_cancel_queued_app">Sovelluksen käynnistys peruttiin</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB vapaana</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">हालैका हेर्न आफ्नो यन्त्र अनलक गर्नुहोस्</string>
+    <string name="slim_recent_pinned">हालैका हेर्न स्क्रिन अनपिन गर्नुहोस्</string>
+    <string name="toast_recents_queue_app">हालैका बन्द गरेपछि %s सुरु गर्नुहोस्</string>
+    <string name="toast_recents_cancel_queued_app">एप सुरु गर्ने कार्य रद्द गरियो</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB खाली</string>
+</resources>

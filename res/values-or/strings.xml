@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">ବର୍ତ୍ତମାନର ଦେଖିବାକୁ ଡିଭାଇସ ଅନଲକ କରନ୍ତୁ</string>
+    <string name="slim_recent_pinned">ବର୍ତ୍ତମାନର ଦେଖିବାକୁ ସ୍କ୍ରିନ ଅନପିନ କରନ୍ତୁ</string>
+    <string name="toast_recents_queue_app">ବର୍ତ୍ତମାନର ବନ୍ଦ ହେବା ପରେ %s ଲଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="toast_recents_cancel_queued_app">ଆପ ଲଞ୍ଚ ବାତିଲ ହେଲା</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB ଖାଲି</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="slim_recent_keyguard">Zhbllokoje pajisjen për të parë të fundit</string>
+    <string name="slim_recent_pinned">Hiqe fiksimin e ekranit për të parë të fundit</string>
+    <string name="toast_recents_queue_app">Hap %s pasi të mbyllësh të fundit</string>
+    <string name="toast_recents_cancel_queued_app">Hapja e aplikacionit u anulua</string>
+    <string name="slim_recents_free_ram">RAM: %1$d MB të lira</string>
+</resources>

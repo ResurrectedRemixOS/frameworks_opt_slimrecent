@@ -22,4 +22,5 @@
     <string name="slim_recent_pinned">Otkačite zaslon za prikaz nedavnih aplikacija</string>
     <string name="toast_recents_cancel_queued_app">Pokretanje aplikacije je otkazano</string>
     <string name="slim_recents_free_ram">%1$d RAMa slobodno</string>
+    <string name="toast_recents_queue_app">Pokreni %s nakon zatvaranja nedavnih</string>
 </resources>
